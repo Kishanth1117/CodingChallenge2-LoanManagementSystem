@@ -1,0 +1,106 @@
+TEST CASE SCENARIOS FOR LOAN MANAGEMENT SYSTEM
+
+1. APPLY FOR NEW LOAN
+   
+   A. Home Loan Application (Good Credit Score)
+   - Customer Details:
+     Name: John Smith
+     Email: john.smith@email.com
+     Phone: 9876543210
+     Address: 123 Main Street, Boston, MA
+     Credit Score: 750
+   - Loan Details:
+     Principal: 2000000
+     Interest Rate: 8.5
+     Term: 240 (20 years)
+   - Property Details:
+     Address: 456 Park Avenue, Boston, MA
+     Value: 2500000
+   Expected: APPROVED status due to credit score > 650
+
+   B. Car Loan Application (Poor Credit Score)
+   - Customer Details:
+     Name: Alice Johnson
+     Email: alice.j@email.com
+     Phone: 8765432109
+     Address: 789 Oak Road, Boston, MA
+     Credit Score: 580
+   - Loan Details:
+     Principal: 800000
+     Interest Rate: 9.5
+     Term: 60 (5 years)
+   - Car Details:
+     Model: Toyota Camry 2023
+     Value: 900000
+   Expected: REJECTED status due to credit score < 650
+
+2. VIEW ALL LOANS
+   - Execute after creating above loans
+   Expected: Should display both loans with their respective statuses and details
+
+3. VIEW LOAN DETAILS (Test with both loans)
+   A. View Home Loan
+   - Enter loan ID of home loan
+   Expected Output:
+   - All loan details
+   - Monthly EMI ≈ 17,295 (calculated)
+   - Total Interest ≈ 2,150,800 (calculated)
+
+   B. View Car Loan
+   - Enter loan ID of car loan
+   Expected Output:
+   - All loan details
+   - Monthly EMI ≈ 16,748 (calculated)
+   - Total Interest ≈ 204,880 (calculated)
+
+4. MAKE LOAN REPAYMENT
+   A. Valid Repayment (Home Loan)
+   - Enter loan ID of home loan
+   - Amount: 52,000 (3 EMIs)
+   Expected: Success message, remaining amount reduced
+
+   B. Invalid Repayment (Car Loan)
+   - Enter loan ID of car loan
+   - Amount: 10,000 (less than one EMI)
+   Expected: Error message (amount less than EMI)
+
+   C. Invalid Loan ID
+   - Enter non-existent loan ID: 9999
+   Expected: InvalidLoanException
+
+5. EDGE CASES
+   A. Apply Loan
+   - Try negative principal amount
+   - Try negative interest rate
+   - Try invalid credit score (negative or > 900)
+   - Try invalid email format
+   - Try invalid phone number format
+
+   B. Repayment
+   - Try negative amount
+   - Try amount greater than remaining loan amount
+   - Try repayment on rejected loan
+
+TEST EXECUTION SEQUENCE:
+
+1. Start application
+2. Create Home Loan (Case 1.A)
+3. View All Loans (Case 2) - Should show 1 loan
+4. Create Car Loan (Case 1.B)
+5. View All Loans (Case 2) - Should show 2 loans
+6. View Home Loan Details (Case 3.A)
+7. View Car Loan Details (Case 3.B)
+8. Make Valid Repayment (Case 4.A)
+9. Verify updated loan amount
+10. Try Invalid Repayment (Case 4.B)
+11. Try Invalid Loan ID (Case 4.C)
+12. Test Edge Cases (Case 5)
+13. Exit application
+
+EXPECTED DATABASE STATE AFTER TESTS:
+- Two customers in Customer table
+- Two loans in Loan table
+- One record in HomeLoan table
+- One record in CarLoan table
+- Home loan should show reduced remaining amount
+- Car loan should show original amount
